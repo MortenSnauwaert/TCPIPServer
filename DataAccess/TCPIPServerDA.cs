@@ -86,9 +86,85 @@ public class TCPIPServerDA : IDisposable
         }
         catch { }
     }
-
+    public void SendMessageToAllClients(string message)
+    {
+        lock (clients)
+        {
+            foreach(var client in clients.Keys)
+            {
+                if (isRunning && client != null && client.Connected)
+                {
+                    try
+                    {
+                        var writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+                        writer.WriteLine(message);
+                    }
+                    catch (IOException)
+                    {
+                        // Handle write error
+                    }
+                }
+            }
+        }
+    }
+    public void SendMessageToClient(TcpClient client, string message)
+    {
+        if (isRunning && client != null && client.Connected)
+        {
+            try
+            {
+                var writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+                writer.WriteLine(message);
+            }
+            catch (IOException)
+            {
+                // Handle write error
+            }
+        }
+    }
+    public void StopClient(TcpClient client)
+    {
+        try
+        {
+            lock (clients)
+            {
+                if (isRunning && clients.ContainsKey(client))
+                {
+                    ClientDisconnected?.Invoke(client, "verbinding verborken");
+                    client.Dispose();
+                    clients.Remove(client);
+                }
+            }
+        } catch { }
+    }
+    // Listener stoppen
+    public void StopServer()
+    {
+        isRunning = false;
+        lock (clients)
+        {
+            foreach (var client in clients.Keys)
+            {
+                StopClient(client);
+            }
+            clients.Clear();
+        }
+        if (listener != null) listener.Stop();
+    }
     public void Dispose()
     {
-        throw new NotImplementedException();
+        if (isRunning) StopServer();
+        listener.Dispose();
+    }
+    public Dictionary<TcpClient, string> GetConnectedClients()
+    {
+        try
+        {
+            lock (clients)
+            {
+                return new Dictionary<TcpClient, string>(clients);
+            }
+        }
+        catch { return null; }
     }
 }
