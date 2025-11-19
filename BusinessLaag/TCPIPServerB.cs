@@ -70,19 +70,9 @@ public class TCPIPServerB : IDisposable
     }
     public void StopClient(TcpClient client)
     {
-        try
-        {
-            lock (clients)
-            {
-                if (_tcpipServer.isRunning && clients.ContainsKey(client))
-                {
-                    OnClientDisconnected?.Invoke(client, "verbinding verbroken");
-                    client.Dispose();
-                    clients.Remove(client);
-                }
-            }
-        }
-        catch { }
+        if (_tcpipServer != null && _tcpipServer.isRunning)
+            _tcpipServer.StopClient(client);
+        else throw new Exception("Server niet opgestart");
     }
     public void StopServer()
     {
@@ -98,10 +88,14 @@ public class TCPIPServerB : IDisposable
             throw new Exception("Kan server niet stoppen!");
         }
     }
-    public Dictionary<Tcp>
+    public Dictionary<TcpClient, string> GetConnectedClients()
+    {
+        if (_tcpipServer != null && _tcpipServer.isRunning)
+            return _tcpipServer.GetConnectedClients();
+        else throw new Exception("Server niet opgestart");
+    }
     public void Dispose()
     {
-        if (isRunning) StopServer();
-        listener.Dispose();
+        _tcpipServer.Dispose();
     }
 }
