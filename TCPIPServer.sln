@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLaag", "BusinessLaag\BusinessLaag.csproj", "{C572292D-05A3-4BE7-881E-2462CC19C401}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationTCPIPServer", "PresentationTCPIPServer\PresentationTCPIPServer.csproj", "{132CE61D-590E-4908-B311-27BBE6D9A0F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C572292D-05A3-4BE7-881E-2462CC19C401}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C572292D-05A3-4BE7-881E-2462CC19C401}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C572292D-05A3-4BE7-881E-2462CC19C401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132CE61D-590E-4908-B311-27BBE6D9A0F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132CE61D-590E-4908-B311-27BBE6D9A0F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132CE61D-590E-4908-B311-27BBE6D9A0F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132CE61D-590E-4908-B311-27BBE6D9A0F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
